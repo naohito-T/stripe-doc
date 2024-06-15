@@ -1683,6 +1683,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"frontend@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "frontend@workspace:."
+  dependencies:
+    "@types/node": ^20
+    "@types/react": ^18
+    "@types/react-dom": ^18
+    eslint: ^8
+    eslint-config-next: 14.2.4
+    next: 14.2.4
+    npm-run-all: ^4.1.5
+    postcss: ^8
+    prettier: ^3.3.2
+    prettier-plugin-tailwindcss: ^0.6.4
+    react: ^18
+    react-dom: ^18
+    tailwindcss: ^3.4.1
+    typescript: ^5
+  languageName: unknown
+  linkType: soft
+
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -2761,27 +2782,6 @@ __metadata:
   checksum: aa92de608021b242401676e35cfa5aa42dd70cbdc082b916da7fb925c542173e36bce97ea3e804923fe92c0ad991434e4a38327e15a1b5b5f945d66df615ae6d
   languageName: node
   linkType: hard
-
-"my-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "my-app@workspace:."
-  dependencies:
-    "@types/node": ^20
-    "@types/react": ^18
-    "@types/react-dom": ^18
-    eslint: ^8
-    eslint-config-next: 14.2.4
-    next: 14.2.4
-    npm-run-all: ^4.1.5
-    postcss: ^8
-    prettier: ^3.3.2
-    prettier-plugin-tailwindcss: ^0.6.4
-    react: ^18
-    react-dom: ^18
-    tailwindcss: ^3.4.1
-    typescript: ^5
-  languageName: unknown
-  linkType: soft
 
 "mz@npm:^2.7.0":
   version: 2.7.0
