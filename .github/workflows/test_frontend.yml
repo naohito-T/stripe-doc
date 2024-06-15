@@ -1,0 +1,110 @@
+name: Test Frontend
+
+on:
+  push:
+    paths:
+      - "frontend/**"
+      - ".github/workflows/test_frontend.yml"
+      - '!**.md'
+      - '!**.yml'
+      - '!**.yaml'
+
+env:
+  NODE_VERSION: "20.13.1"
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  # nodeのsetup
+  setup-node-modules-frontend:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Composite Setup node
+        id: setup-node
+        uses: ./.github/actions/setup/node
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          work-directory: frontend
+
+  lint-frontend:
+    needs: setup-node-modules-frontend
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore node modules
+        uses: actions/cache@v4
+        id: node_modules_cache_id
+        with:
+          path: "frontend/node_modules"
+          key: ${{ runner.os }}-modules-1-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Lint check
+        run: yarn lint
+
+  build-frontend:
+    needs: setup-node-modules-frontend
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Restore node modules
+        uses: actions/cache@v4
+        id: node_modules_cache_id
+        with:
+          path: "frontend/node_modules"
+          key: ${{ runner.os }}-modules-1-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Build check
+        run: yarn build
+
+  # test-frontend:
+  #   # dependabotがPR作成の際にjestのカバレッジレポートがスコープで作成できなくなるため付与
+  #   permissions: write-all
+  #   needs:
+  #     - setup-env-frontend
+  #   runs-on: ubuntu-22.04
+  #   timeout-minutes: 10
+
+  #   defaults:
+  #     run:
+  #       working-directory: frontend
+
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+
+  #     - name: Use .env
+  #       working-directory: frontend
+  #       run: |
+  #         echo $'${{ needs.setup-env-frontend.outputs.env_file }}' > .env
+
+  #     # Testを実行して、コードカバレッジレポートを出力する
+  #     # action内でyarnを自動でするため依存関係のinstallは必要ない。
+  #     - uses: artiomtr/jest-coverage-report-action@v2
+  #       with:
+  #         working-directory: frontend
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         package-manager: yarn
+  #         test-script: yarn test:c
