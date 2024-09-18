@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3333",
     "build": "next build",
     "start": "next start",
     "tsc:c": "tsc --noEmit",
@@ -15,7 +15,10 @@
     "lint:f": "run-p prettier:f eslint:f"
   },
   "dependencies": {
+    "@headlessui/react": "^2.0.4",
+    "classnames": "^2.5.1",
     "next": "14.2.4",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18"
   },
